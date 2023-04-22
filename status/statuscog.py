@@ -31,11 +31,11 @@ class Status(commands.Cog):
             serverStatus = ""
             serverUptime = ""
             if 'vars' in serverDetailsJson:
-                serverDetailsJson = serverDetailsJson.vars
+                serverDetailsJson = serverDetailsJson.get('vars', {})
                 playersJson = requests.get('http://'+ "185.30.165.128:30120" +'/players.json').json()
                 serverStatus = "```✅ Online```"
-                serverUptime = "```" + serverDetailsJson['Uptime'] + "```"
-                playerNumber = "```" + len(playersJson) + "/" + serverDetailsJson['sv_maxClients'] + "```"
+                serverUptime = "```" + serverDetailsJson.get('Uptime', '0m') + "```"
+                playerNumber = "```" + len(playersJson) + "/" + serverDetailsJson.get('sv_maxClients', '1024') + "```"
             else:
                 serverStatus = "```❌ Offline```"
                 serverUptime = "```0m```"
