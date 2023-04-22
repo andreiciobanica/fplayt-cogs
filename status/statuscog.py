@@ -26,8 +26,9 @@ class Status(commands.Cog):
         channelId = await self.config.channelId()
         messageId = await self.config.messageId()
         if channelId == 0 and messageId == 0:
-            serverDetailsRaw = rq.get('http://'+ "185.30.165.128:30120" +'/info.json')
-            serverDetailsJson = serverDetailsRaw.json()
+            serverDetailsJson = requests.get('http://'+ "185.30.165.128:30120" +'/info.json').json()
+            playersRaw = requests.get('http://'+ "185.30.165.128:30120" +'/players.json').json()
+            playerNumber = "```" + len(playersRaw.json()) + "/ 1024```"
             serverUptime = "```" + serverDetailsJson["Uptime"] + "```"
             status_channel = self.bot.get_channel(772899841679818753)
             embed=discord.Embed(color=0xe3ee34, url="https://cdn.discordapp.com/attachments/1001319323161346220/1099451162765307984/logofpt.png")
@@ -36,7 +37,7 @@ class Status(commands.Cog):
             embed.add_field(name="Server name", value="```FPlayT Advanced Roleplay```", inline=False)
             embed.add_field(name="Server DNS", value="```server.fplayt.ro```", inline=False)
             embed.add_field(name="Status", value="```✅ Online```", inline=True)
-            embed.add_field(name="Jucători online", value="```921/1024```", inline=True)
+            embed.add_field(name="Jucători online", value=playerNumber, inline=True)
             embed.add_field(name="Server uptime", value=serverUptime, inline=True)
             dateNow = datetime.now()
             text = "FPlayT Community • " + str(format_datetime(dateNow, "dd.MM.yyyy HH:mm:ss", tzinfo=get_timezone('Europe/Bucharest'), locale='ro_RO'))
