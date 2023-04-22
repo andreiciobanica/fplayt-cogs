@@ -17,7 +17,7 @@ class Status(commands.Cog):
         self.config.register_global(**default_global)
         self.config.register_guild(**default_guild)
         self.index = 0
-        self.initCog()
+        await self.initCog()
         self.serverstatus.start()
 
     def cog_unload(self):
