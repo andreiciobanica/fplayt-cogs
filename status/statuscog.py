@@ -21,8 +21,7 @@ class Status(commands.Cog):
         self.bot.loop.create_task(self.initcog())
         
     async def initcog(self):
-        await self.client.wait_until_ready()
-        remind_channel = self.bot.get_channel(772899841679818754)
+        remind_channel = self.bot.get_channel(772899841679818753)
         await remind_channel.send("Passed")
 
     def cog_unload(self):
