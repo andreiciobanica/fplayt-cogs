@@ -1,7 +1,7 @@
 from redbot.core import commands
 from redbot.core import Config
 from discord.ext import tasks
-from datetime import date, datetime, time
+from datetime import date, datetime, time, get_timezone
 from babel.dates import format_date, format_datetime, format_time
 import discord
 
@@ -35,7 +35,7 @@ class Status(commands.Cog):
             embed.add_field(name="Jucători online", value="```921/1024```", inline=True)
             embed.add_field(name="Server uptime", value="```3h 10m```", inline=True)
             dateNow = datetime.now()
-            text = "FPlayT Community • " + str(format_datetime(dateNow, format='full', locale='ro_RO'))
+            text = "FPlayT Community • " + str(format_datetime(dateNow, "dd.MM.yyyy HH:mm:ss", tzinfo=get_timezone('Europe/Bucharest'), locale='ro_RO'))
             embed.set_footer(text=text)
             status_message = await status_channel.send(embed=embed)
             await self.config.channelId.set(772899841679818753)
