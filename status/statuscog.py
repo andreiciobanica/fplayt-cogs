@@ -27,16 +27,26 @@ class Status(commands.Cog):
         messageId = await self.config.messageId()
         if channelId == 0 and messageId == 0:
             serverDetailsJson = requests.get('http://'+ "185.30.165.128:30120" +'/info.json').json()
-            playersJson = requests.get('http://'+ "185.30.165.128:30120" +'/players.json').json()
-            playerNumber = "```" + len(playersRaw) + "/1024```"
-            serverUptime = "```" + serverDetailsJson["Uptime"] + "```"
+            playerNumber = ""
+            serverStatus = ""
+            serverUptime = ""
+            if hasattr(serverDetailsJson, vars):
+                serverDetailsJson = serverDetailsJson.vars
+                playersJson = requests.get('http://'+ "185.30.165.128:30120" +'/players.json').json()
+                serverStatus = "```✅ Online```"
+                serverUptime = "```" + getattr(serverDetailsJson, 'Uptime', "0m") + "```"
+                playerNumber = "```" + len(playersJson) + "/" + getattr(serverDetailsJson, 'sv_maxClients', "1024") + "```"
+            else:
+                serverStatus = "```❌ Offline```"
+                serverUptime = "```0m```"
+                playerNumber = "```0/1024```"
             status_channel = self.bot.get_channel(772899841679818753)
             embed=discord.Embed(color=0xe3ee34, url="https://cdn.discordapp.com/attachments/1001319323161346220/1099451162765307984/logofpt.png")
             embed.set_author(name="FPlayT Community | Status", icon_url="https://cdn.discordapp.com/attachments/1001319323161346220/1099451162765307984/logofpt.png")
             embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/1001319323161346220/1099451162765307984/logofpt.png")
             embed.add_field(name="Server name", value="```FPlayT Advanced Roleplay```", inline=False)
             embed.add_field(name="Server DNS", value="```server.fplayt.ro```", inline=False)
-            embed.add_field(name="Status", value="```✅ Online```", inline=True)
+            embed.add_field(name="Status", value=serverStatus, inline=True)
             embed.add_field(name="Jucători online", value=playerNumber, inline=True)
             embed.add_field(name="Server uptime", value=serverUptime, inline=True)
             dateNow = datetime.now()
