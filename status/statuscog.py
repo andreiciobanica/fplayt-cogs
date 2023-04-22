@@ -25,7 +25,8 @@ class Status(commands.Cog):
         if channelId == 0 and messageId == 0:
             self.config.channelId.set(772899841679818753)
             status_channel = self.bot.get_channel(772899841679818753)
-            embed=discord.Embed(color=0xe3ee34)
+            embed=discord.Embed(color=0xe3ee34, url="https://cdn.discordapp.com/attachments/1001319323161346220/1099451162765307984/logofpt.png")
+            embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/1001319323161346220/1099451162765307984/logofpt.png")
             embed.add_field(name="FPlayT Community | Status", value="", inline=False)
             embed.add_field(name="Server", value="```FPlayT Advanced Roleplay```", inline=False)
             embed.add_field(name="Server DNS", value="```server.fplayt.ro```", inline=False)
