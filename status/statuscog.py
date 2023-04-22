@@ -27,7 +27,7 @@ class Status(commands.Cog):
             status_channel = self.bot.get_channel(772899841679818753)
             embed=discord.Embed(color=0xe3ee34)
             embed.add_field(name="FPlayT Community | Status", value="", inline=False)
-            embed.add_field(name="Server", value="`FPlayT Advanced Roleplay`", inline=False)
+            embed.add_field(name="Server", value="```FPlayT Advanced Roleplay```", inline=False)
             embed.add_field(name="Server DNS", value="server.fplayt.ro", inline=False)
             embed.add_field(name="Server connect", value="`connect server.fplayt.ro`", inline=False)
             embed.add_field(name="Status", value="`✅ Online`", inline=True)
