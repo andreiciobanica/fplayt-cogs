@@ -16,17 +16,16 @@ class Status(commands.Cog):
         }
         self.config.register_global(**default_global)
         self.config.register_guild(**default_guild)
+        
+        await self.client.wait_until_ready()
+        remind_channel = self.bot.get_channel(772899841679818754)
+        await remind_channel.send("Passed")
+        
         self.index = 0
-        await self.initCog()
         self.serverstatus.start()
 
     def cog_unload(self):
         self.serverstatus.cancel()
-        
-    async def initCog(self):
-        await self.client.wait_until_ready()
-        remind_channel = self.bot.get_channel(772899841679818754)
-        await remind_channel.send("Passed")
 
     @tasks.loop(seconds=60.0)
     async def serverstatus(self):
