@@ -19,7 +19,9 @@ class Status(commands.Cog):
 
     @tasks.loop(seconds=60.0)
     async def serverstatus(self):
-        if self.config.channelId() == 0 and self.config.messageId() == 0:
+        channelId = await self.config.channelId()
+        messageId = await self.config.messageId()
+        if channelId == 0 and messageId == 0:
             self.config.channelId.set(772899841679818753)
             status_channel = self.bot.get_channel(772899841679818753)
             embed=discord.Embed(color=0xe3ee34)
