@@ -39,7 +39,7 @@ class Status(commands.Cog):
             embed.set_footer(text=text)
             status_message = await status_channel.send(embed=embed)
             await self.config.channelId.set(772899841679818753)
-            await self.config.messageId.set(status_message)
+            await self.config.messageId.set(status_message.id)
         else:
             print("a")
         
