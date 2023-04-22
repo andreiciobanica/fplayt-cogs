@@ -27,8 +27,8 @@ class Status(commands.Cog):
         messageId = await self.config.messageId()
         if channelId == 0 and messageId == 0:
             serverDetailsJson = requests.get('http://'+ "185.30.165.128:30120" +'/info.json').json()
-            playersRaw = requests.get('http://'+ "185.30.165.128:30120" +'/players.json').json()
-            playerNumber = "```" + len(playersRaw.json()) + "/ 1024```"
+            playersJson = requests.get('http://'+ "185.30.165.128:30120" +'/players.json').json()
+            playerNumber = "```" + len(playersRaw) + "/1024```"
             serverUptime = "```" + serverDetailsJson["Uptime"] + "```"
             status_channel = self.bot.get_channel(772899841679818753)
             embed=discord.Embed(color=0xe3ee34, url="https://cdn.discordapp.com/attachments/1001319323161346220/1099451162765307984/logofpt.png")
