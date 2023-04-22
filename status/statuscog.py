@@ -27,6 +27,7 @@ class Status(commands.Cog):
         messageId = await self.config.messageId()
         if channelId == 0 and messageId == 0:
             serverDetailsJson = requests.get('http://'+ "185.30.165.128:30120" +'/info.json').json()
+            print(serverDetailsJson)
             playerNumber = ""
             serverStatus = ""
             serverUptime = ""
