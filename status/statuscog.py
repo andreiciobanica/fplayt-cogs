@@ -1,7 +1,7 @@
 from redbot.core import commands
 from redbot.core import Config
 from discord.ext import tasks
-from datetime import date, datetime, time, get_timezone
+from datetime import date, datetime, time
 from babel.dates import format_date, format_datetime, format_time
 import discord
 
