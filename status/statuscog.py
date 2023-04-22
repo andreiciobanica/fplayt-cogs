@@ -16,12 +16,13 @@ class Status(commands.Cog):
         }
         self.config.register_global(**default_global)
         self.config.register_guild(**default_guild)
+        self.index = 0
         self.printer.start()
 
-        def cog_unload(self):
-            self.printer.cancel()
+    def cog_unload(self):
+        self.printer.cancel()
 
-        @tasks.loop(seconds=5.0)
-        async def printer(self):
-            print(self.index)
-            self.index += 1
+    @tasks.loop(seconds=5.0)
+    async def printer(self):
+        print(self.index)
+        self.index += 1
