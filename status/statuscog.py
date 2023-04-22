@@ -30,7 +30,7 @@ class Status(commands.Cog):
             playerNumber = ""
             serverStatus = ""
             serverUptime = ""
-            if hasattr(serverDetailsJson, vars):
+            if hasattr(serverDetailsJson, "vars"):
                 serverDetailsJson = serverDetailsJson.vars
                 playersJson = requests.get('http://'+ "185.30.165.128:30120" +'/players.json').json()
                 serverStatus = "```✅ Online```"
