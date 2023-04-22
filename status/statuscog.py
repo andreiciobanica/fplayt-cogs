@@ -35,7 +35,7 @@ class Status(commands.Cog):
             embed.add_field(name="Jucători online", value="```921/1024```", inline=True)
             embed.add_field(name="Server uptime", value="```3h 10m```", inline=True)
             dateNow = datetime.now()
-            text = "FPlayT Community • " + format_date(dateNow, format='full', locale='ro_RO')
+            text = "FPlayT Community • " + format_datetime(dateNow, format='full', locale='ro_RO')
             embed.set_footer(text=text)
             status_message = await status_channel.send(embed=embed)
             await self.config.channelId.set(772899841679818753)
