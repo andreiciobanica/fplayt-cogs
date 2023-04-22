@@ -1,6 +1,6 @@
 from redbot.core import commands
 from redbot.core import Config
-from discord.ext import tasks, commands
+from discord.ext import tasks
 
 class Status(commands.Cog):
     def __init__(self, bot):
