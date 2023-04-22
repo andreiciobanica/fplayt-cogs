@@ -1,6 +1,5 @@
 from redbot.core import commands
 from redbot.core import Config
-from discord.ext import tasks
 
 class Status(commands.Cog):
     def __init__(self, bot):
@@ -22,7 +21,7 @@ class Status(commands.Cog):
     def cog_unload(self):
         self.serverstatus.cancel()
 
-    @tasks.loop(seconds=60.0)
+    @discord.ext.tasks.loop(seconds=60.0)
     async def serverstatus(self):
         remind_channel = self.bot.get_channel(772899841679818753)
         await remind_channel.send("Passed")
