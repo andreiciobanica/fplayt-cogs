@@ -17,12 +17,17 @@ class Status(commands.Cog):
         self.config.register_global(**default_global)
         self.config.register_guild(**default_guild)
         self.index = 0
-        self.printer.start()
+        self.initCog()
+        self.serverstatus.start()
 
     def cog_unload(self):
-        self.printer.cancel()
+        self.serverstatus.cancel()
+        
+    async def initCog(self):
+        await self.client.wait_until_ready()
+        remind_channel = self.bot.get_channel(772899841679818754)
+        await remind_channel.send("Passed")
 
-    @tasks.loop(seconds=5.0)
-    async def printer(self):
-        print(self.index)
+    @tasks.loop(seconds=60.0)
+    async def serverstatus(self):
         self.index += 1
