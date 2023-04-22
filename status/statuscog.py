@@ -1,5 +1,6 @@
 from redbot.core import commands
 from redbot.core import Config
+from discord.ext import tasks, commands
 
 class Status(commands.Cog):
     def __init__(self, bot):
@@ -15,15 +16,12 @@ class Status(commands.Cog):
         }
         self.config.register_global(**default_global)
         self.config.register_guild(**default_guild)
-        self.tasker.start()
-        
-        @tasks.loop(seconds=10)
-        async def tasker(self):
-            if self.config.channelId() != 0 and self.config.messageId() != 0:
-                print("in task")
-    
-        @tasker.before_loop
-        async def before_tasker(self):
-            print("before wait")
-            await self.bot.wait_until_red_ready()
-            print("before wait 2")      
+        self.printer.start()
+
+        def cog_unload(self):
+            self.printer.cancel()
+
+        @tasks.loop(seconds=5.0)
+        async def printer(self):
+            print(self.index)
+            self.index += 1
