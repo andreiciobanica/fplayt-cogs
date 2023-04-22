@@ -27,16 +27,15 @@ class Status(commands.Cog):
         messageId = await self.config.messageId()
         if channelId == 0 and messageId == 0:
             serverDetailsJson = requests.get('http://'+ "185.30.165.128:30120" +'/info.json').json()
-            print(serverDetailsJson)
             playerNumber = ""
             serverStatus = ""
             serverUptime = ""
-            if hasattr(serverDetailsJson, "vars"):
+            if 'vars' in serverDetailsJson:
                 serverDetailsJson = serverDetailsJson.vars
                 playersJson = requests.get('http://'+ "185.30.165.128:30120" +'/players.json').json()
                 serverStatus = "```✅ Online```"
-                serverUptime = "```" + getattr(serverDetailsJson, 'Uptime', "0m") + "```"
-                playerNumber = "```" + len(playersJson) + "/" + getattr(serverDetailsJson, 'sv_maxClients', "1024") + "```"
+                serverUptime = "```" + serverDetailsJson['Uptime'] + "```"
+                playerNumber = "```" + len(playersJson) + "/" + serverDetailsJson['sv_maxClients'] + "```"
             else:
                 serverStatus = "```❌ Offline```"
                 serverUptime = "```0m```"
