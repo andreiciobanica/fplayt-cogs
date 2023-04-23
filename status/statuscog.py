@@ -87,7 +87,7 @@ class Status(commands.Cog):
                     text = "FPlayT Community • " + str(format_datetime(dateNow, "dd.MM.yyyy HH:mm:ss", tzinfo=get_timezone('Europe/Bucharest'), locale='ro_RO'))
                     new_embed.set_footer(text=text)
                     await status_message.edit(embed=new_embed)
-                except discord.error.NotFound:
+                except discord.NotFound:
                     serverDetailsJson = requests.get('http://'+ "185.30.165.128:30120" +'/info.json').json()
                     playerNumber = ""
                     serverStatus = ""
