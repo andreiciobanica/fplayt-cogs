@@ -21,7 +21,7 @@ class Status(commands.Cog):
     def cog_unload(self):
         self.serverstatus.cancel()
 
-    @tasks.loop(seconds=60.0)
+    @tasks.loop(seconds=150.0)
     async def serverstatus(self):
         channelId = await self.config.channelId()
         messageId = await self.config.messageId()
