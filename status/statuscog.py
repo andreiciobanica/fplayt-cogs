@@ -59,7 +59,7 @@ class Status(commands.Cog):
             status_channel = self.bot.get_channel(772899841679818753)
             if status_channel is not None:
                 try:
-                    await status_channel.fetch_message(messageId)
+                    status_message = await status_channel.fetch_message(messageId)
                     serverDetailsJson = requests.get('http://'+ "185.30.165.128:30120" +'/info.json').json()
                     playerNumber = ""
                     serverStatus = ""
