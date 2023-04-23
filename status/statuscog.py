@@ -85,7 +85,8 @@ class Status(commands.Cog):
                         dateNow = datetime.now()
                         text = "FPlayT Community • " + str(format_datetime(dateNow, "dd.MM.yyyy HH:mm:ss", tzinfo=get_timezone('Europe/Bucharest'), locale='ro_RO'))
                         embed.set_footer(text=text)
-                        status_channel = self.bot.get_channel(772899841679818753)
+                        status_channel = self.bot.get_channel(channelId)
+                        await status_message.delete()
                         status_message = await status_channel.send(embed=embed)
                         await self.config.messageId.set(status_message.id)
                     else:
@@ -142,7 +143,7 @@ class Status(commands.Cog):
                     dateNow = datetime.now()
                     text = "FPlayT Community • " + str(format_datetime(dateNow, "dd.MM.yyyy HH:mm:ss", tzinfo=get_timezone('Europe/Bucharest'), locale='ro_RO'))
                     embed.set_footer(text=text)
-                    status_channel = self.bot.get_channel(772899841679818753)
+                    status_channel = self.bot.get_channel(channelId)
                     status_message = await status_channel.send(embed=embed)
                     await self.config.messageId.set(status_message.id)
         
