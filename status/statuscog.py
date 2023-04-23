@@ -59,6 +59,7 @@ class Status(commands.Cog):
             if status_channel is not None:
                 try:
                     status_message = await status_channel.fetch_message(messageId)
+                    print(now() - status_message.created_at)
                     serverDetailsJson = requests.get('http://'+ "185.30.165.128:30120" +'/info.json').json()
                     playerNumber = ""
                     serverStatus = ""
