@@ -15,7 +15,6 @@ class Status(commands.Cog):
             "messageId": 0,
         }
         self.config.register_global(**default_global)
-        self.index = 0
         self.serverstatus.start()
 
     def cog_unload(self):
