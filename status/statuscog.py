@@ -7,7 +7,7 @@ import discord
 import requests
 
 class MyView(discord.ui.View):
-    @discord.ui.button(label="Click me!", style=discord.ButtonStyle.primary, emoji="😎")
+    @discord.ui.button(label="Forum", style=discord.ButtonStyle.primary, emoji="Forum", url='https://forum.fplayt.ro')
     async def button_callback(self, button, interaction):
         await interaction.response.send_message("You clicked the button!")
         
