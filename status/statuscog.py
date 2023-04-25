@@ -56,12 +56,12 @@ class Status(commands.Cog):
             dateNow = datetime.now()
             text = "FPlayT Community • " + str(format_datetime(dateNow, "dd.MM.yyyy HH:mm:ss", tzinfo=get_timezone('Europe/Bucharest'), locale='ro_RO'))
             embed.set_footer(text=text)
-            status_channel = self.bot.get_channel(1046098484123680907)
+            status_channel = self.bot.get_channel(1081200838409719880)
             status_message = await status_channel.send(embed=embed, view=MyView())
-            await self.config.channelId.set(1046098484123680907)
+            await self.config.channelId.set(1081200838409719880)
             await self.config.messageId.set(status_message.id)
         else:
-            status_channel = self.bot.get_channel(1046098484123680907)
+            status_channel = self.bot.get_channel(1081200838409719880)
             if status_channel is not None:
                 try:
                     status_message = await status_channel.fetch_message(messageId)
