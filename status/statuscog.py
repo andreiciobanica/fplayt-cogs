@@ -9,6 +9,7 @@ import requests
 class MyView(discord.ui.View):
     def __init__(self):
         super().__init__()
+        self.add_item(discord.ui.Button(label="Forum", style=discord.ButtonStyle.blurple, url="fivem://connect/cfx.re/join/ajyydz"))
         self.add_item(discord.ui.Button(label="Forum", style=discord.ButtonStyle.url, url="https://forum.fplayt.ro"))
         
     @discord.ui.button(label="Connect", style=discord.ButtonStyle.blurple)
