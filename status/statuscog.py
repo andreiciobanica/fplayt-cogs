@@ -7,7 +7,9 @@ import discord
 import requests
 
 class MyView(discord.ui.View):
-    @discord.ui.button(label="Forum", style=discord.ButtonStyle.url, url='https://forum.fplayt.ro')
+    def __init__(self):
+        forumButton = discord.ui.button(label="Forum", style=discord.ButtonStyle.url, url='https://forum.fplayt.ro')
+        self.add_item(forumButton)
         
 class Status(commands.Cog):
     def __init__(self, bot):
