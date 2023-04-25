@@ -8,8 +8,12 @@ import requests
 
 class MyView(discord.ui.View):
     def __init__(self):
-        forumButton = discord.ui.button(label="Forum", style=discord.ButtonStyle.url, url='https://forum.fplayt.ro')
-        self.add_item(forumButton)
+        super().__init__()
+        self.add_item(discord.ui.Button(label="Forum", style=discord.ButtonStyle.url, url="https://forum.fplayt.ro"))
+        
+    @discord.ui.button(label="Connect", stylediscord.ButtonStyle.blurple)
+    async def connectButton(self, interaction: discord.Interaction, button: discord.ui.Button):
+        await interaction.response.send_message("a", ephemeral=True)
         
 class Status(commands.Cog):
     def __init__(self, bot):
