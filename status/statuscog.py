@@ -6,14 +6,11 @@ from babel.dates import format_datetime, get_timezone
 import discord
 import requests
 
-@discord.ui.button(label="Yes", style=discord.ButtonStyle.green)
-    async def yes_button(
-        self, interaction: discord.Interaction, button: discord.ui.Button
-    ):
-        self.value = True
-        await self.disable_items(interaction)
-        self.stop()
-
+class MyView(discord.ui.View):
+    @discord.ui.button(label="Click me!", style=discord.ButtonStyle.primary, emoji="😎")
+    async def button_callback(self, button, interaction):
+        await interaction.response.send_message("You clicked the button!")
+        
 class Status(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
