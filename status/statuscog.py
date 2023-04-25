@@ -11,7 +11,7 @@ class MyView(discord.ui.View):
         super().__init__()
         self.add_item(discord.ui.Button(label="Forum", style=discord.ButtonStyle.url, url="https://forum.fplayt.ro"))
         
-    @discord.ui.button(label="Connect", stylediscord.ButtonStyle.blurple)
+    @discord.ui.button(label="Connect", style=discord.ButtonStyle.blurple)
     async def connectButton(self, interaction: discord.Interaction, button: discord.ui.Button):
         await interaction.response.send_message("a", ephemeral=True)
         
