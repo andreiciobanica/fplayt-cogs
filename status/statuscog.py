@@ -9,8 +9,8 @@ import requests
 class MyView(discord.ui.View):
     def __init__(self):
         super().__init__()
-        self.add_item(discord.ui.Button(label="Connect", style=discord.ButtonStyle.blurple, url="<fivem://connect/cfx.re/join/ajyydz>"))
-#         self.add_item(discord.ui.Button(label="Forum", style=discord.ButtonStyle.url, url="https://forum.fplayt.ro"))
+        self.add_item(discord.ui.Button(label="Connect", style=discord.ButtonStyle.blurple, url="https://cfx.re/join/ajyydz"))
+        self.add_item(discord.ui.Button(label="Forum", style=discord.ButtonStyle.url, url="https://forum.fplayt.ro"))
         
 class Status(commands.Cog):
     def __init__(self, bot):
