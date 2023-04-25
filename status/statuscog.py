@@ -6,6 +6,14 @@ from babel.dates import format_datetime, get_timezone
 import discord
 import requests
 
+@discord.ui.button(label="Yes", style=discord.ButtonStyle.green)
+    async def yes_button(
+        self, interaction: discord.Interaction, button: discord.ui.Button
+    ):
+        self.value = True
+        await self.disable_items(interaction)
+        self.stop()
+
 class Status(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -51,7 +59,7 @@ class Status(commands.Cog):
             text = "FPlayT Community • " + str(format_datetime(dateNow, "dd.MM.yyyy HH:mm:ss", tzinfo=get_timezone('Europe/Bucharest'), locale='ro_RO'))
             embed.set_footer(text=text)
             status_channel = self.bot.get_channel(1046098484123680907)
-            status_message = await status_channel.send(embed=embed)
+            status_message = await status_channel.send(embed=embed, view=MyView())
             await self.config.channelId.set(1046098484123680907)
             await self.config.messageId.set(status_message.id)
         else:
@@ -87,7 +95,7 @@ class Status(commands.Cog):
                         embed.set_footer(text=text)
                         status_channel = self.bot.get_channel(channelId)
                         await status_message.delete()
-                        status_message = await status_channel.send(embed=embed)
+                        status_message = await status_channel.send(embed=embed, view=MyView())
                         await self.config.messageId.set(status_message.id)
                     else:
                         serverDetailsJson = requests.get('http://'+ "185.30.165.128:30120" +'/info.json').json()
@@ -116,7 +124,7 @@ class Status(commands.Cog):
                         dateNow = datetime.now()
                         text = "FPlayT Community • " + str(format_datetime(dateNow, "dd.MM.yyyy HH:mm:ss", tzinfo=get_timezone('Europe/Bucharest'), locale='ro_RO'))
                         new_embed.set_footer(text=text)
-                        await status_message.edit(embed=new_embed)
+                        await status_message.edit(embed=new_embed, view=MyView())
                 except discord.NotFound:
                     serverDetailsJson = requests.get('http://'+ "185.30.165.128:30120" +'/info.json').json()
                     playerNumber = ""
@@ -144,7 +152,7 @@ class Status(commands.Cog):
                     text = "FPlayT Community • " + str(format_datetime(dateNow, "dd.MM.yyyy HH:mm:ss", tzinfo=get_timezone('Europe/Bucharest'), locale='ro_RO'))
                     embed.set_footer(text=text)
                     status_channel = self.bot.get_channel(channelId)
-                    status_message = await status_channel.send(embed=embed)
+                    status_message = await status_channel.send(embed=embed, view=MyView())
                     await self.config.messageId.set(status_message.id)
         
     @serverstatus.before_loop
