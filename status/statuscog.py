@@ -66,7 +66,78 @@ class Status(commands.Cog):
                 try:
                     status_message = await status_channel.fetch_message(messageId)
                     if (datetime.now() - status_message.created_at.replace(tzinfo=None)).days >= 2:
-                        serverDetailsJson = requests.get('http://'+ "185.30.165.128:30120" +'/info.json').json()
+                        try:
+                            serverDetailsJson = requests.get('http://185.30.165.128:30120/info.json')
+                            serverDetailsJson.raise_for_status()
+                            serverDetailsJson = serverDetailsJson.json()
+                            playerNumber = ""
+                            serverStatus = ""
+                            serverUptime = ""
+                            if 'vars' in serverDetailsJson:
+                                serverDetailsJson = serverDetailsJson.get('vars', {})
+                                playersJson = requests.get('http://'+ "185.30.165.128:30120" +'/players.json').json()
+                                serverStatus = "```✅ Online```"
+                                serverUptime = "```" + str(serverDetailsJson.get('Uptime', '0m')) + "```"
+                                playerNumber = "```" + str(len(playersJson)) + "/" + str(serverDetailsJson.get('sv_maxClients', '1024')) + "```"
+                            else:
+                                serverStatus = "```❌ Offline```"
+                                serverUptime = "```0m```"
+                                playerNumber = "```0/1024```"
+                            embed=discord.Embed(color=0xe3ee34, url="https://cdn.discordapp.com/attachments/1001319323161346220/1099451162765307984/logofpt.png")
+                            embed.set_author(name="FPlayT Community | Status", icon_url="https://cdn.discordapp.com/attachments/1001319323161346220/1099451162765307984/logofpt.png")
+                            embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/1001319323161346220/1099451162765307984/logofpt.png")
+                            embed.add_field(name="Server name", value="```FPlayT Advanced Roleplay```", inline=False)
+                            embed.add_field(name="Server DNS", value="```server.fplayt.ro```", inline=False)
+                            embed.add_field(name="Status", value=serverStatus, inline=True)
+                            embed.add_field(name="Jucători online", value=playerNumber, inline=True)
+                            embed.add_field(name="Server uptime", value=serverUptime, inline=True)
+                            dateNow = datetime.now()
+                            text = "FPlayT Community • " + str(format_datetime(dateNow, "dd.MM.yyyy HH:mm:ss", tzinfo=get_timezone('Europe/Bucharest'), locale='ro_RO'))
+                            embed.set_footer(text=text)
+                            status_channel = self.bot.get_channel(channelId)
+                            await status_message.delete()
+                            status_message = await status_channel.send(embed=embed, view=MyView())
+                            await self.config.messageId.set(status_message.id)
+                        except requests.exceptions.HTTPError as errh:
+                            print("HTTP Error - [line 102]")
+                    else:
+                        try:
+                            serverDetailsJson = requests.get('http://185.30.165.128:30120/info.json')
+                            serverDetailsJson.raise_for_status()
+                            serverDetailsJson = serverDetailsJson.json()
+                            playerNumber = ""
+                            serverStatus = ""
+                            serverUptime = ""
+                            if 'vars' in serverDetailsJson:
+                                serverDetailsJson = serverDetailsJson.get('vars', {})
+                                playersJson = requests.get('http://'+ "185.30.165.128:30120" +'/players.json').json()
+                                serverStatus = "```✅ Online```"
+                                serverUptime = "```" + str(serverDetailsJson.get('Uptime', '0m')) + "```"
+                                playerNumber = "```" + str(len(playersJson)) + "/" + str(serverDetailsJson.get('sv_maxClients', '1024')) + "```"
+                            else:
+                                serverStatus = "```❌ Offline```"
+                                serverUptime = "```0m```"
+                                playerNumber = "```0/1024```"
+                            status_channel = self.bot.get_channel(channelId)
+                            new_embed=discord.Embed(color=0xe3ee34, url="https://cdn.discordapp.com/attachments/1001319323161346220/1099451162765307984/logofpt.png")
+                            new_embed.set_author(name="FPlayT Community | Status", icon_url="https://cdn.discordapp.com/attachments/1001319323161346220/1099451162765307984/logofpt.png")
+                            new_embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/1001319323161346220/1099451162765307984/logofpt.png")
+                            new_embed.add_field(name="Server name", value="```FPlayT Advanced Roleplay```", inline=False)
+                            new_embed.add_field(name="Server DNS", value="```server.fplayt.ro```", inline=False)
+                            new_embed.add_field(name="Status", value=serverStatus, inline=True)
+                            new_embed.add_field(name="Jucători online", value=playerNumber, inline=True)
+                            new_embed.add_field(name="Server uptime", value=serverUptime, inline=True)
+                            dateNow = datetime.now()
+                            text = "FPlayT Community • " + str(format_datetime(dateNow, "dd.MM.yyyy HH:mm:ss", tzinfo=get_timezone('Europe/Bucharest'), locale='ro_RO'))
+                            new_embed.set_footer(text=text)
+                            await status_message.edit(embed=new_embed, view=MyView())
+                        except requests.exceptions.HTTPError as errh:
+                            print("HTTP Error - [line 135]")
+                except discord.NotFound:
+                    try:
+                        serverDetailsJson = requests.get('http://185.30.165.128:30120/info.json')
+                        serverDetailsJson.raise_for_status()
+                        serverDetailsJson = serverDetailsJson.json()
                         playerNumber = ""
                         serverStatus = ""
                         serverUptime = ""
@@ -92,66 +163,10 @@ class Status(commands.Cog):
                         text = "FPlayT Community • " + str(format_datetime(dateNow, "dd.MM.yyyy HH:mm:ss", tzinfo=get_timezone('Europe/Bucharest'), locale='ro_RO'))
                         embed.set_footer(text=text)
                         status_channel = self.bot.get_channel(channelId)
-                        await status_message.delete()
                         status_message = await status_channel.send(embed=embed, view=MyView())
                         await self.config.messageId.set(status_message.id)
-                    else:
-                        serverDetailsJson = requests.get('http://'+ "185.30.165.128:30120" +'/info.json').json()
-                        playerNumber = ""
-                        serverStatus = ""
-                        serverUptime = ""
-                        if 'vars' in serverDetailsJson:
-                            serverDetailsJson = serverDetailsJson.get('vars', {})
-                            playersJson = requests.get('http://'+ "185.30.165.128:30120" +'/players.json').json()
-                            serverStatus = "```✅ Online```"
-                            serverUptime = "```" + str(serverDetailsJson.get('Uptime', '0m')) + "```"
-                            playerNumber = "```" + str(len(playersJson)) + "/" + str(serverDetailsJson.get('sv_maxClients', '1024')) + "```"
-                        else:
-                            serverStatus = "```❌ Offline```"
-                            serverUptime = "```0m```"
-                            playerNumber = "```0/1024```"
-                        status_channel = self.bot.get_channel(channelId)
-                        new_embed=discord.Embed(color=0xe3ee34, url="https://cdn.discordapp.com/attachments/1001319323161346220/1099451162765307984/logofpt.png")
-                        new_embed.set_author(name="FPlayT Community | Status", icon_url="https://cdn.discordapp.com/attachments/1001319323161346220/1099451162765307984/logofpt.png")
-                        new_embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/1001319323161346220/1099451162765307984/logofpt.png")
-                        new_embed.add_field(name="Server name", value="```FPlayT Advanced Roleplay```", inline=False)
-                        new_embed.add_field(name="Server DNS", value="```server.fplayt.ro```", inline=False)
-                        new_embed.add_field(name="Status", value=serverStatus, inline=True)
-                        new_embed.add_field(name="Jucători online", value=playerNumber, inline=True)
-                        new_embed.add_field(name="Server uptime", value=serverUptime, inline=True)
-                        dateNow = datetime.now()
-                        text = "FPlayT Community • " + str(format_datetime(dateNow, "dd.MM.yyyy HH:mm:ss", tzinfo=get_timezone('Europe/Bucharest'), locale='ro_RO'))
-                        new_embed.set_footer(text=text)
-                        await status_message.edit(embed=new_embed, view=MyView())
-                except discord.NotFound:
-                    serverDetailsJson = requests.get('http://'+ "185.30.165.128:30120" +'/info.json').json()
-                    playerNumber = ""
-                    serverStatus = ""
-                    serverUptime = ""
-                    if 'vars' in serverDetailsJson:
-                        serverDetailsJson = serverDetailsJson.get('vars', {})
-                        playersJson = requests.get('http://'+ "185.30.165.128:30120" +'/players.json').json()
-                        serverStatus = "```✅ Online```"
-                        serverUptime = "```" + str(serverDetailsJson.get('Uptime', '0m')) + "```"
-                        playerNumber = "```" + str(len(playersJson)) + "/" + str(serverDetailsJson.get('sv_maxClients', '1024')) + "```"
-                    else:
-                        serverStatus = "```❌ Offline```"
-                        serverUptime = "```0m```"
-                        playerNumber = "```0/1024```"
-                    embed=discord.Embed(color=0xe3ee34, url="https://cdn.discordapp.com/attachments/1001319323161346220/1099451162765307984/logofpt.png")
-                    embed.set_author(name="FPlayT Community | Status", icon_url="https://cdn.discordapp.com/attachments/1001319323161346220/1099451162765307984/logofpt.png")
-                    embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/1001319323161346220/1099451162765307984/logofpt.png")
-                    embed.add_field(name="Server name", value="```FPlayT Advanced Roleplay```", inline=False)
-                    embed.add_field(name="Server DNS", value="```server.fplayt.ro```", inline=False)
-                    embed.add_field(name="Status", value=serverStatus, inline=True)
-                    embed.add_field(name="Jucători online", value=playerNumber, inline=True)
-                    embed.add_field(name="Server uptime", value=serverUptime, inline=True)
-                    dateNow = datetime.now()
-                    text = "FPlayT Community • " + str(format_datetime(dateNow, "dd.MM.yyyy HH:mm:ss", tzinfo=get_timezone('Europe/Bucharest'), locale='ro_RO'))
-                    embed.set_footer(text=text)
-                    status_channel = self.bot.get_channel(channelId)
-                    status_message = await status_channel.send(embed=embed, view=MyView())
-                    await self.config.messageId.set(status_message.id)
+                    except requests.exceptions.HTTPError as errh:
+                        print("HTTP Error - [line 169]")
         
     @serverstatus.before_loop
     async def before_printer(self):
